@@ -9,6 +9,7 @@ const Sidebar = ({
   currentValue,
   percentageChange,
   priceHistory,
+  lastUpdated,
 }) => {
   return (
     <div
@@ -31,6 +32,9 @@ const Sidebar = ({
         <p style={{ color: percentageChange >= 0 ? "#4CAF50" : "#ef5350" }}>
           {percentageChange >= 0 ? "▲" : "▼"}{" "}
           {Math.abs(percentageChange).toFixed(2)}%
+        </p>
+        <p style={{ fontSize: "0.8em", color: "#888" }}>
+          Last updated: {new Date(lastUpdated).toLocaleTimeString()}
         </p>
         {priceHistory && priceHistory.length > 0 && (
           <SmallPriceGraph data={priceHistory} />

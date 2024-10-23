@@ -5,6 +5,9 @@ import CandlestickChart from "./components/CandlestickChart";
 import CoinlibWidget from "./components/CoinlibWidget";
 import CryptoConverterWidget from "./components/CryptoConverterWidget";
 
+// Define the update interval in milliseconds
+const UPDATE_INTERVAL = 10000; // 60 seconds
+
 const App = () => {
   const [cryptoList, setCryptoList] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -17,6 +20,7 @@ const App = () => {
   const [percentageChange, setPercentageChange] = useState(0);
   const coinsPerPage = 5;
   const [priceHistory, setPriceHistory] = useState([]);
+  const [lastUpdated, setLastUpdated] = useState(Date.now());
 
   const fetchCryptoList = async () => {
     try {
@@ -91,6 +95,29 @@ const App = () => {
     }
   };
 
+  const fetchCurrentPrice = useCallback(async () => {
+    if (selectedCrypto) {
+      try {
+        const response = await axios.get(
+          `https://api.coingecko.com/api/v3/simple/price`,
+          {
+            params: {
+              ids: selectedCrypto,
+              vs_currencies: "usd",
+              include_24hr_change: "true",
+            },
+          }
+        );
+        const data = response.data[selectedCrypto];
+        setCurrentValue(data.usd);
+        setPercentageChange(data.usd_24h_change);
+        setLastUpdated(Date.now());
+      } catch (error) {
+        console.error("Error fetching current price:", error);
+      }
+    }
+  }, [selectedCrypto]);
+
   useEffect(() => {
     fetchCryptoList();
   }, []);
@@ -134,6 +161,14 @@ const App = () => {
     (crypto) => crypto.id === selectedCrypto
   );
 
+  // Updated useEffect for real-time updates
+  useEffect(() => {
+    fetchCurrentPrice(); // Fetch immediately when component mounts or selectedCrypto changes
+    const interval = setInterval(fetchCurrentPrice, UPDATE_INTERVAL);
+
+    return () => clearInterval(interval); // Clean up on unmount
+  }, [fetchCurrentPrice]);
+
   return (
     <div
       style={{
@@ -170,6 +205,7 @@ const App = () => {
                 currentValue={currentValue}
                 percentageChange={percentageChange}
                 priceHistory={priceHistory}
+                lastUpdated={lastUpdated}
               />
             </div>
 
