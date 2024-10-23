@@ -29,10 +29,22 @@ const Sidebar = ({
         <h1 style={{ fontSize: "2em", margin: "10px 0" }}>
           ${currentValue.toFixed(2)}
         </h1>
-        <p style={{ color: percentageChange >= 0 ? "#4CAF50" : "#ef5350" }}>
-          {percentageChange >= 0 ? "▲" : "▼"}{" "}
-          {Math.abs(percentageChange).toFixed(2)}%
-        </p>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <p
+            style={{
+              color: percentageChange >= 0 ? "#4CAF50" : "#ef5350",
+              margin: 0,
+            }}
+          >
+            {percentageChange >= 0 ? "▲" : "▼"}{" "}
+            {Math.abs(percentageChange).toFixed(2)}%
+          </p>
+        </div>
         <p style={{ fontSize: "0.8em", color: "#888" }}>
           Last updated: {new Date(lastUpdated).toLocaleTimeString()}
         </p>

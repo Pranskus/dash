@@ -206,6 +206,8 @@ const App = () => {
                 percentageChange={percentageChange}
                 priceHistory={priceHistory}
                 lastUpdated={lastUpdated}
+                // Remove or comment out the coinLogo prop
+                // coinLogo={selectedCryptoData?.image}
               />
             </div>
 
