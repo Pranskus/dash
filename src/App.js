@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import Sidebar from "./components/Sidebar";
 import CandlestickChart from "./components/CandlestickChart";
+import CoinlibWidget from "./components/CoinlibWidget";
 
 const App = () => {
   const [cryptoList, setCryptoList] = useState([]);
@@ -106,58 +107,76 @@ const App = () => {
   return (
     <div
       style={{
-        padding: "20px",
         backgroundColor: "#131722",
         color: "white",
         minHeight: "100vh",
-        display: "flex",
-        gap: "20px",
       }}
     >
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <>
-          <div
-            style={{
-              width: "250px",
-              borderRadius: "10px",
-              padding: "20px",
-              alignSelf: "flex-start",
-            }}
-          >
-            <Sidebar
-              cryptoList={currentCoins}
-              selectedCrypto={selectedCrypto}
-              onCryptoChange={handleCryptoChange}
-              currentPage={currentPage}
-              totalPages={Math.ceil(cryptoList.length / coinsPerPage)}
-              onPageChange={handlePageChange}
-              currentValue={currentValue}
-              percentageChange={percentageChange}
-            />
-          </div>
-          <div
-            style={{
-              flex: 1,
-              backgroundColor: "#1e2130",
-              borderRadius: "10px",
-              height: "595px",
-              marginTop: "18px",
-              padding: "10px",
-              boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-            }}
-          >
-            <CandlestickChart
-              data={chartData}
-              chartType={chartType}
-              onChartTypeChange={handleChartTypeChange}
-              timeInterval={timeInterval}
-              onTimeIntervalChange={handleTimeIntervalChange}
-            />
-          </div>
-        </>
-      )}
+      {/* CoinlibWidget at the top, full width */}
+      <CoinlibWidget />
+
+      <div
+        style={{
+          padding: "20px",
+          display: "flex",
+          gap: "20px",
+          marginTop: "20px",
+        }}
+      >
+        {loading ? (
+          <p>Loading...</p>
+        ) : (
+          <>
+            <div
+              style={{
+                width: "250px",
+                borderRadius: "10px",
+                padding: "20px",
+                alignSelf: "flex-start",
+              }}
+            >
+              <Sidebar
+                cryptoList={currentCoins}
+                selectedCrypto={selectedCrypto}
+                onCryptoChange={handleCryptoChange}
+                currentPage={currentPage}
+                totalPages={Math.ceil(cryptoList.length / coinsPerPage)}
+                onPageChange={handlePageChange}
+                currentValue={currentValue}
+                percentageChange={percentageChange}
+              />
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                flex: 1,
+                gap: "20px",
+              }}
+            >
+              <div
+                style={{
+                  backgroundColor: "#1e2130",
+                  borderRadius: "10px",
+                  height: "595px",
+                  padding: "10px",
+                  boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                  marginBottom: "20px",
+                }}
+              >
+                <CandlestickChart
+                  data={chartData}
+                  chartType={chartType}
+                  onChartTypeChange={handleChartTypeChange}
+                  timeInterval={timeInterval}
+                  onTimeIntervalChange={handleTimeIntervalChange}
+                />
+              </div>
+              {/* You can add more components here if needed */}
+            </div>
+          </>
+        )}
+      </div>
     </div>
   );
 };
