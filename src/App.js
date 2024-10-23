@@ -127,6 +127,7 @@ const App = () => {
           <p>Loading...</p>
         ) : (
           <>
+            {/* Sidebar */}
             <div
               style={{
                 width: "250px",
@@ -146,55 +147,51 @@ const App = () => {
                 percentageChange={percentageChange}
               />
             </div>
+
+            {/* Main content area */}
             <div
               style={{
                 display: "flex",
-                flexDirection: "column",
                 flex: 1,
                 gap: "20px",
               }}
             >
+              {/* Chart */}
               <div
                 style={{
-                  display: "flex",
-                  gap: "20px",
+                  flex: 3,
+                  backgroundColor: "#1e2130",
+                  borderRadius: "10px",
+                  padding: "10px",
+                  boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                  maxWidth: "70%",
+                  marginTop: "20px",
+                  maxHeight: "335px",
                 }}
               >
-                <div
-                  style={{
-                    flex: 3,
-                    backgroundColor: "#1e2130",
-                    borderRadius: "10px",
-                    height: "595px",
-                    padding: "10px",
-                    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-                    maxWidth: "70%",
-                    marginTop: "20px",
-                  }}
-                >
-                  <CandlestickChart
-                    data={chartData}
-                    chartType={chartType}
-                    onChartTypeChange={handleChartTypeChange}
-                    timeInterval={timeInterval}
-                    onTimeIntervalChange={handleTimeIntervalChange}
-                  />
-                </div>
-                <div
-                  style={{
-                    flex: 1,
-                    borderRadius: "10px",
-                    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    marginTop: "20px",
-                  }}
-                >
-                  <CryptoConverterWidget />
-                </div>
+                <CandlestickChart
+                  data={chartData}
+                  chartType={chartType}
+                  onChartTypeChange={handleChartTypeChange}
+                  timeInterval={timeInterval}
+                  onTimeIntervalChange={handleTimeIntervalChange}
+                />
               </div>
-              {/* You can add more components here if needed */}
+
+              {/* Crypto Converter Widget */}
+              <div
+                style={{
+                  flex: 1,
+                  borderRadius: "10px",
+                  boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "flex-start",
+                  marginTop: "20px",
+                }}
+              >
+                <CryptoConverterWidget />
+              </div>
             </div>
           </>
         )}

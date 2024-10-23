@@ -20,7 +20,6 @@ const CryptoConverterWidget = () => {
         height: "100%",
         display: "flex",
         flexDirection: "column",
-        justifyContent: "center",
       }}
     >
       <iframe

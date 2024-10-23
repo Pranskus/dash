@@ -72,8 +72,8 @@ const CandlestickChart = ({
   }, [data, chartType]);
 
   return (
-    <div style={{ width: "100%", height: "300px" }}>
-      <div ref={chartContainerRef} style={{ width: "100%", height: "550px" }} />
+    <div style={{ width: "100%", height: "200px" }}>
+      <div ref={chartContainerRef} style={{ width: "100%", height: "300px" }} />
       <div
         style={{
           marginTop: "5px",
