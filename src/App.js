@@ -132,7 +132,7 @@ const App = () => {
               style={{
                 width: "250px",
                 borderRadius: "10px",
-                padding: "20px",
+
                 alignSelf: "flex-start",
               }}
             >
@@ -152,45 +152,51 @@ const App = () => {
             <div
               style={{
                 display: "flex",
+                flexDirection: "column",
                 flex: 1,
                 gap: "20px",
               }}
             >
-              {/* Chart */}
               <div
                 style={{
-                  flex: 3,
-                  backgroundColor: "#1e2130",
-                  borderRadius: "10px",
-                  padding: "10px",
-                  boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-                  maxWidth: "70%",
-                  marginTop: "20px",
-                  maxHeight: "335px",
-                }}
-              >
-                <CandlestickChart
-                  data={chartData}
-                  chartType={chartType}
-                  onChartTypeChange={handleChartTypeChange}
-                  timeInterval={timeInterval}
-                  onTimeIntervalChange={handleTimeIntervalChange}
-                />
-              </div>
-
-              {/* Crypto Converter Widget */}
-              <div
-                style={{
-                  flex: 1,
-                  borderRadius: "10px",
-                  boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
                   display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "flex-start",
-                  marginTop: "20px",
+                  gap: "20px",
                 }}
               >
-                <CryptoConverterWidget />
+                {/* Chart */}
+                <div
+                  style={{
+                    flex: 3,
+                    backgroundColor: "#1e2130",
+                    borderRadius: "10px",
+                    padding: "10px",
+                    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                    maxWidth: "70%",
+                    height: "350px",
+                  }}
+                >
+                  <CandlestickChart
+                    data={chartData}
+                    chartType={chartType}
+                    onChartTypeChange={handleChartTypeChange}
+                    timeInterval={timeInterval}
+                    onTimeIntervalChange={handleTimeIntervalChange}
+                  />
+                </div>
+
+                {/* Crypto Converter Widget */}
+                <div
+                  style={{
+                    flex: 1,
+                    borderRadius: "10px",
+                    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "flex-start",
+                  }}
+                >
+                  <CryptoConverterWidget />
+                </div>
               </div>
             </div>
           </>

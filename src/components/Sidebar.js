@@ -16,6 +16,7 @@ const Sidebar = ({
       <div
         style={{
           backgroundColor: "#2a2e39",
+          margin: 0,
           borderRadius: "10px",
           padding: "20px",
           boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
@@ -36,7 +37,6 @@ const Sidebar = ({
             border: "none",
             padding: "10px 20px",
             borderRadius: "5px",
-            marginTop: "10px",
             cursor: "pointer",
           }}
         >
