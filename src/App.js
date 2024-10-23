@@ -16,6 +16,7 @@ const App = () => {
   const [currentValue, setCurrentValue] = useState(0);
   const [percentageChange, setPercentageChange] = useState(0);
   const coinsPerPage = 5;
+  const [priceHistory, setPriceHistory] = useState([]);
 
   const fetchCryptoList = async () => {
     try {
@@ -68,6 +69,28 @@ const App = () => {
     [timeInterval]
   );
 
+  const fetchPriceHistory = async (cryptoId) => {
+    try {
+      const response = await axios.get(
+        `https://api.coingecko.com/api/v3/coins/${cryptoId}/market_chart`,
+        {
+          params: {
+            vs_currency: "usd",
+            days: 7,
+            interval: "daily",
+          },
+        }
+      );
+      const formattedData = response.data.prices.map(([time, price]) => ({
+        time: time / 1000,
+        value: price,
+      }));
+      setPriceHistory(formattedData);
+    } catch (error) {
+      console.error("Error fetching price history:", error);
+    }
+  };
+
   useEffect(() => {
     fetchCryptoList();
   }, []);
@@ -75,6 +98,7 @@ const App = () => {
   useEffect(() => {
     if (selectedCrypto) {
       fetchHistoricalData(selectedCrypto);
+      fetchPriceHistory(selectedCrypto);
       const selectedCryptoData = cryptoList.find(
         (crypto) => crypto.id === selectedCrypto
       );
@@ -104,6 +128,11 @@ const App = () => {
   const indexOfLastCoin = currentPage * coinsPerPage;
   const indexOfFirstCoin = indexOfLastCoin - coinsPerPage;
   const currentCoins = cryptoList.slice(indexOfFirstCoin, indexOfLastCoin);
+
+  // Find the selected crypto data
+  const selectedCryptoData = cryptoList.find(
+    (crypto) => crypto.id === selectedCrypto
+  );
 
   return (
     <div
@@ -140,6 +169,7 @@ const App = () => {
                 onCryptoChange={handleCryptoChange}
                 currentValue={currentValue}
                 percentageChange={percentageChange}
+                priceHistory={priceHistory}
               />
             </div>
 
@@ -172,10 +202,10 @@ const App = () => {
                 >
                   <CandlestickChart
                     data={chartData}
-                    chartType={chartType}
-                    onChartTypeChange={handleChartTypeChange}
                     timeInterval={timeInterval}
                     onTimeIntervalChange={handleTimeIntervalChange}
+                    selectedCrypto={selectedCrypto}
+                    coinLogo={selectedCryptoData?.image}
                   />
                 </div>
 

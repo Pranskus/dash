@@ -1,5 +1,6 @@
 import React from "react";
 import CryptoSelector from "./CryptoSelector";
+import SmallPriceGraph from "./SmallPriceGraph";
 
 const Sidebar = ({
   cryptoList,
@@ -7,6 +8,7 @@ const Sidebar = ({
   onCryptoChange,
   currentValue,
   percentageChange,
+  priceHistory,
 }) => {
   return (
     <div
@@ -30,6 +32,9 @@ const Sidebar = ({
           {percentageChange >= 0 ? "▲" : "▼"}{" "}
           {Math.abs(percentageChange).toFixed(2)}%
         </p>
+        {priceHistory && priceHistory.length > 0 && (
+          <SmallPriceGraph data={priceHistory} />
+        )}
       </div>
 
       {/* Cryptocurrency Selector */}

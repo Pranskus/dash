@@ -3,10 +3,10 @@ import { createChart } from "lightweight-charts";
 
 const CandlestickChart = ({
   data,
-  chartType,
-  onChartTypeChange,
   timeInterval,
   onTimeIntervalChange,
+  selectedCrypto,
+  coinLogo,
 }) => {
   const chartContainerRef = useRef();
   const chartRef = useRef();
@@ -46,22 +46,7 @@ const CandlestickChart = ({
       wickDownColor: "#ef5350",
     });
 
-    const lineSeries = chartRef.current.addLineSeries({
-      color: "#2962FF",
-      lineWidth: 2,
-    });
-
-    if (chartType === "candlestick") {
-      candlestickSeries.setData(data);
-      lineSeries.setData([]);
-    } else {
-      const lineData = data.map((item) => ({
-        time: item.time,
-        value: (item.close + item.open) / 2,
-      }));
-      lineSeries.setData(lineData);
-      candlestickSeries.setData([]);
-    }
+    candlestickSeries.setData(data);
 
     window.addEventListener("resize", handleResize);
 
@@ -69,33 +54,51 @@ const CandlestickChart = ({
       window.removeEventListener("resize", handleResize);
       chartRef.current.remove();
     };
-  }, [data, chartType]);
+  }, [data, selectedCrypto]);
+
+  const buttonStyle = {
+    background: "none",
+    border: "none",
+    color: "white",
+    fontWeight: "bold",
+    fontSize: "12px",
+    padding: "2px 5px",
+    cursor: "pointer",
+  };
 
   return (
-    <div style={{ width: "100%", height: "200px" }}>
-      <div ref={chartContainerRef} style={{ width: "100%", height: "300px" }} />
+    <div style={{ width: "100%", height: "350px", position: "relative" }}>
       <div
         style={{
-          marginTop: "5px",
           display: "flex",
           justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: "10px",
         }}
       >
-        <div>
-          <button
-            onClick={() => onChartTypeChange("candlestick")}
-            style={{ marginRight: "5px", padding: "2px 5px", fontSize: "12px" }}
+        <div style={{ display: "flex", alignItems: "center" }}>
+          {coinLogo && (
+            <img
+              src={coinLogo}
+              alt={`${selectedCrypto} logo`}
+              style={{
+                width: "32px",
+                height: "32px",
+                marginRight: "10px",
+              }}
+            />
+          )}
+          <h2
+            style={{
+              color: "rgba(255, 255, 255, 0.9)",
+              fontSize: "16px",
+              margin: 0,
+            }}
           >
-            Candlestick
-          </button>
-          <button
-            onClick={() => onChartTypeChange("line")}
-            style={{ padding: "2px 5px", fontSize: "12px" }}
-          >
-            Line
-          </button>
+            {selectedCrypto.toUpperCase()}
+          </h2>
         </div>
-        <div>
+        <div style={{ display: "flex", gap: "5px" }}>
           {["1D", "5D", "1M", "6M", "1Y", "5Y"].map((interval, index) => (
             <button
               key={interval}
@@ -105,9 +108,11 @@ const CandlestickChart = ({
                 )
               }
               style={{
-                padding: "2px 5px",
-                fontSize: "12px",
-                marginLeft: "2px",
+                ...buttonStyle,
+                color:
+                  timeInterval === ["1", "7", "30", "180", "365", "1825"][index]
+                    ? "#00C26F"
+                    : "white",
               }}
             >
               {interval}
@@ -115,6 +120,10 @@ const CandlestickChart = ({
           ))}
         </div>
       </div>
+      <div
+        ref={chartContainerRef}
+        style={{ width: "100%", height: "calc(100% - 60px)" }}
+      />
     </div>
   );
 };
