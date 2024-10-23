@@ -1,70 +1,27 @@
 import React from "react";
 
-const CryptoSelector = ({
-  cryptoList,
-  selectedCrypto,
-  onCryptoChange,
-  currentPage,
-  totalPages,
-  onPageChange,
-}) => {
+const CryptoSelector = ({ cryptoList, selectedCrypto, onCryptoChange }) => {
   return (
-    <div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "10px",
-          marginBottom: "15px",
-          maxHeight: "300px",
-          overflowY: "auto",
-        }}
-      >
-        {cryptoList.map((crypto) => (
-          <button
-            key={crypto.id}
-            onClick={() => onCryptoChange(crypto.id)}
-            style={{
-              padding: "10px",
-              backgroundColor:
-                selectedCrypto === crypto.id ? "#4CAF50" : "#3a3f50",
-              color: "white",
-              border: "none",
-              borderRadius: "4px",
-              cursor: "pointer",
-              textAlign: "left",
-            }}
-          >
-            {crypto.name} ({crypto.symbol.toUpperCase()})
-          </button>
-        ))}
-      </div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        <button
-          onClick={() => onPageChange(currentPage - 1)}
-          disabled={currentPage === 1}
-          style={{ padding: "5px 10px", cursor: "pointer" }}
-        >
-          Previous
-        </button>
-        <span>
-          Page {currentPage} of {totalPages}
-        </span>
-        <button
-          onClick={() => onPageChange(currentPage + 1)}
-          disabled={currentPage === totalPages}
-          style={{ padding: "5px 10px", cursor: "pointer" }}
-        >
-          Next
-        </button>
-      </div>
-    </div>
+    <select
+      value={selectedCrypto}
+      onChange={(e) => onCryptoChange(e.target.value)}
+      style={{
+        width: "100%",
+        padding: "10px",
+        backgroundColor: "#3a3f50",
+        color: "white",
+        border: "none",
+        borderRadius: "5px",
+        fontSize: "16px",
+        cursor: "pointer",
+      }}
+    >
+      {cryptoList.map((crypto) => (
+        <option key={crypto.id} value={crypto.id}>
+          {crypto.name} ({crypto.symbol.toUpperCase()})
+        </option>
+      ))}
+    </select>
   );
 };
 

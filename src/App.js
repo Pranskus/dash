@@ -127,22 +127,17 @@ const App = () => {
           <p>Loading...</p>
         ) : (
           <>
-            {/* Sidebar */}
+            {/* Merged Sidebar */}
             <div
               style={{
                 width: "250px",
-                borderRadius: "10px",
-
                 alignSelf: "flex-start",
               }}
             >
               <Sidebar
-                cryptoList={currentCoins}
+                cryptoList={cryptoList}
                 selectedCrypto={selectedCrypto}
                 onCryptoChange={handleCryptoChange}
-                currentPage={currentPage}
-                totalPages={Math.ceil(cryptoList.length / coinsPerPage)}
-                onPageChange={handlePageChange}
                 currentValue={currentValue}
                 percentageChange={percentageChange}
               />
