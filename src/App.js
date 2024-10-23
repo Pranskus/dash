@@ -3,6 +3,7 @@ import axios from "axios";
 import Sidebar from "./components/Sidebar";
 import CandlestickChart from "./components/CandlestickChart";
 import CoinlibWidget from "./components/CoinlibWidget";
+import CryptoConverterWidget from "./components/CryptoConverterWidget";
 
 const App = () => {
   const [cryptoList, setCryptoList] = useState([]);
@@ -120,7 +121,6 @@ const App = () => {
           padding: "20px",
           display: "flex",
           gap: "20px",
-          marginTop: "20px",
         }}
       >
         {loading ? (
@@ -156,21 +156,43 @@ const App = () => {
             >
               <div
                 style={{
-                  backgroundColor: "#1e2130",
-                  borderRadius: "10px",
-                  height: "595px",
-                  padding: "10px",
-                  boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-                  marginBottom: "20px",
+                  display: "flex",
+                  gap: "20px",
                 }}
               >
-                <CandlestickChart
-                  data={chartData}
-                  chartType={chartType}
-                  onChartTypeChange={handleChartTypeChange}
-                  timeInterval={timeInterval}
-                  onTimeIntervalChange={handleTimeIntervalChange}
-                />
+                <div
+                  style={{
+                    flex: 3,
+                    backgroundColor: "#1e2130",
+                    borderRadius: "10px",
+                    height: "595px",
+                    padding: "10px",
+                    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                    maxWidth: "70%",
+                    marginTop: "20px",
+                  }}
+                >
+                  <CandlestickChart
+                    data={chartData}
+                    chartType={chartType}
+                    onChartTypeChange={handleChartTypeChange}
+                    timeInterval={timeInterval}
+                    onTimeIntervalChange={handleTimeIntervalChange}
+                  />
+                </div>
+                <div
+                  style={{
+                    flex: 1,
+                    borderRadius: "10px",
+                    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    marginTop: "20px",
+                  }}
+                >
+                  <CryptoConverterWidget />
+                </div>
               </div>
               {/* You can add more components here if needed */}
             </div>
